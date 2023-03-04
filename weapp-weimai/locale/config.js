@@ -5,7 +5,7 @@ count: 返回结果数量
 apiList: api列表
 */
 // 静态资源地址
-var staticUrl = 'https://static.sesine.com/wechat-weapp-movie'
+// var staticUrl = 'https://static.sesine.com/wechat-weapp-movie'
 // api地址
 // var apiUrl = 'https://sesine.com/mina/api'
 var apiUrl = 'https://api.douban.com/v2'

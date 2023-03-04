@@ -66,7 +66,7 @@ App({
     userLocation: null, //用户的位置信息
     selectCity: null, //用户切换的城市
     isRefresh: false,
-    //url: 'http://localhost:8080',
-    url: 'https://mokespace.cn/weimai'
+    url: 'http://localhost:9999',
+    // url: 'https://mokespace.cn/weimai'
   }
 })

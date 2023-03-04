@@ -16,7 +16,7 @@
                 driverClass="com.mysql.cj.jdbc.Driver"
                 connectionURL="jdbc:mysql://mokespace.cn:3306/weipiao?serverTimezone=GMT%2B8"
                 userId="root"
-                password="123456">
+                password="Lyx123456@">
         </jdbcConnection>
 
         <javaTypeResolver >

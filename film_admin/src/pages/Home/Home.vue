@@ -100,7 +100,6 @@ export default {
   data() {
     return {
       //服务器地址
-      server: "http://localhost:8080",
       adminInfo: {},
       currentMenuIndex:'/user_manage'
     };

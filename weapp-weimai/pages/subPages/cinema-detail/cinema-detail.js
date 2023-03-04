@@ -48,7 +48,7 @@ Page({
   //选择电影
   selectMovie(e) {
     const movie = e.detail.movie
-    console.log(movie)
+    console.log(movie + "movie")
     let days = []
     movie.movieDays.forEach(item => {
       days.push({

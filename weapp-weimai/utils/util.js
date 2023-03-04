@@ -20,10 +20,6 @@ function formatYear(date) {
   return [year, month, day].map(formatNumber).join('-')
 }
 
-function formatNumber(n) {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
 
 function formatDate(date) {
   var month = date.getMonth() + 1
@@ -120,14 +116,14 @@ function getTime() {
 }
 
 module.exports = {
-  formatTime: formatTime,
+  formatTime,
   throttle,
   getToday,
   getRandom,
   calcTime,
-  formatDate: formatDate,
-  formatYear: formatYear,
-  formatNumber: formatNumber,
-  getDate: getDate,
-  getTime: getTime
+  formatDate,
+  formatYear,
+  formatNumber,
+  getDate,
+  getTime
 }

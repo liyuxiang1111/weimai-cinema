@@ -19,51 +19,56 @@
 </template>
 
 <script>
-import { login } from "../../api";
-import Vue from "vue";
-import { Input, Button, Message, Form, FormItem } from "element-ui";
-Vue.use(Input);
-Vue.use(Button);
+import { login } from '../../api'
+import Vue from 'vue'
+import { Input, Button, Message, Form, FormItem } from 'element-ui'
+Vue.use(Input)
+Vue.use(Button)
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
-      labelPosition: "right",
-      adminName: "",
-      password: ""
-    };
+      labelPosition: 'right',
+      adminName: 'admin',
+      password: '123456'
+    }
   },
   methods: {
     reset() {
-      this.adminName = "";
-      this.password = "";
+      this.adminName = ''
+      this.password = ''
     },
     async login() {
       if (!this.adminName) {
-        Message.error("请输入用户名！");
+        Message.error('请输入用户名！')
       } else if (!this.password) {
-        Message.error("请输入密码！");
+        Message.error('请输入密码！')
       } else {
-        let json = await login(this.adminName, this.password);
+        let json = await login(this.adminName, this.password)
+        console.log(json.data)
         if (json.state === 200) {
-          if(json.data.cineamId){
-            this.$cookies.set("name",json.data.name);
-            this.$cookies.set("avatar",json.data.avatar);
-            this.$cookies.set("cinemaId",json.data.cineamId);
-            this.$router.push({ path: "/business" });
-          }else{
-            this.$cookies.set("name",json.data.name);
-            this.$cookies.set("avatar",json.data.avatar);
-            this.$router.push({ path: "/home" });
+          console.log(json)
+          if (json.data.cineamId) {
+            // this.$cookies.set('name', json.data.name)
+            // this.$cookies.set('avatar', json.data.avatar)
+            // this.$cookies.set('cinemaId', json.data.cineamId)
+            localStorage.setItem('token', json.data.id)
+            this.$router.push({ path: '/business' })
+          } else {
+            // this.$cookies.set('name', json.data.name)
+            // this.$cookies.set('avatar', json.data.avatar)
+            // this.$cookies.set('password', this.password)
+            localStorage.setItem('token', json.data.id)
+            this.$router.push({ path: '/home' })
           }
-          Message.success("登录成功!");
+          Message.success('登录成功!')
         } else {
-          Message.error(json.message);
+          Message.error(json.message)
         }
       }
     }
   }
-};
+}
 </script>
 
 <style>
@@ -81,7 +86,7 @@ export default {
 .box {
   width: 500px;
   height: 400px;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,6 +99,6 @@ h3 {
   font-size: 36px;
   letter-spacing: 2px;
   color: #888;
-  text-align: center
+  text-align: center;
 }
 </style>

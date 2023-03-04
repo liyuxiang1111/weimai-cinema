@@ -33,7 +33,7 @@ Page( {
     //调用应用实例的方法获取全局数据
     //bannerList
     wx.request({
-      url: app.globalData.url +'/home//getBannerList',
+      url: app.globalData.url +'/home/getBannerList',
       method: 'GET',
       data: {},
       success: function (res) {

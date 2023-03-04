@@ -1,15 +1,14 @@
 spring:
   datasource:
     username: root
-    password: 123456
+    password: Lyx123456@
     url: jdbc:mysql://localhost:3306/weipiao?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
-    host: localhost
+    host: 47.115.204.84
     port: 6379
     timeout: 60s
-    password: 123456
     database: 1
     lettuce:
       pool:
@@ -28,7 +27,8 @@ spring:
   data:
     elasticsearch:
       cluster-name: docker-cluster
-      cluster-nodes: localhost:9300
+      cluster-nodes: 47.115.204.84:9200
+
 file:
   upload-dir: ./upFile
 mybatis:
@@ -51,11 +51,13 @@ logging:
   pattern:
     console: '%d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n'
 
-
 #分页pageHelper
 pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
 
+server:
+  #端口号
+  port: 9999
 

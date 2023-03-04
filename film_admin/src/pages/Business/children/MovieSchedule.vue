@@ -91,7 +91,11 @@
             </el-form-item>
             <el-form-item label="影厅" prop="hallId">
               <el-col :span="12">
-                <el-select v-model="scheduleInfo.hallId" placeholder="请选择" style="width: 100%">
+                <el-select 
+                  v-model="scheduleInfo.hallId"
+                  placeholder="请选择"
+                  @focus="getHall()"
+                  style="width: 100%">
                   <el-option
                     v-for="item in hallOptions"
                     :key="item.id"
@@ -174,7 +178,9 @@
             tableData:[],
             total:0,
             currentPage:1,
-            scheduleInfo:{},
+            scheduleInfo:{
+
+            },
             dialogFormVisible:false,
             addDialogFormVisible:false,
             dialogTitle:'',

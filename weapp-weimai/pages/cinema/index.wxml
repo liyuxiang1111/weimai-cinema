@@ -5,7 +5,7 @@
     <navigator class='city-entry' url='../subPages/city-select/city-select'>
       <text class='city-name'>{{city}}</text>
       <text class='city-entry-arrow'></text>
-     </navigator>
+    </navigator>
     <navigator url='../subPages/search-page/search-page?stype=2' class='search'>
       <text class='iconfont icon-sousuo'></text>搜影院
     </navigator>
@@ -33,7 +33,7 @@
         </navigator>
       </block>
     <view wx:if="{{cinemas.length>0 && hasMore}}">
-      <template is="loadingMore" />
+      <template is="loadingMore"/>
     </view>
   </view>
 </view>

@@ -6,14 +6,14 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/': {  //使用"/api"来代替"http://f.apiplus.c"
+      '/': {
+        //使用"/api"来代替"http://f.apiplus.c"
         target: 'http://localhost:8080/', //源地址
-        changeOrigin: true, //改变源
+        changeOrigin: true //改变源
         // pathRewrite: {
         //   '^/': '' //路径重写
         // }
@@ -28,7 +28,6 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
     /**
      * Source Maps
      */
