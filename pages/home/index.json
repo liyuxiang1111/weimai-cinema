@@ -1,0 +1,5 @@
+{
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 5,
+  "navigationStyle": "custom"
+}

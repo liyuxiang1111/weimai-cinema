@@ -1,0 +1,33 @@
+/* components/topbar.wxss */
+.custom-head {
+    width: 750rpx;
+    /* background: #47a86c; */
+    color: #fff;
+    top: 0;
+}
+
+.custom-content {
+    display: flex;
+    justify-content: space-between;
+}
+.city-name {
+    color: #fff;
+}
+.search {
+    display: flex;
+    background-color: #fff;
+    border-radius: 40rpx;
+    font-weight: 400;
+    height: 100%;
+    margin-right: 20rpx;
+}
+
+.search-input {
+    flex-grow: 1;
+    background: #fff;
+    color: #999;
+    height: inherit;
+    line-height: inherit;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+}

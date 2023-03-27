@@ -1,0 +1,25 @@
+<!--pages/subPages/movie-wishmovie/wishmovie.wxml-->
+<import src='../../../templates/loadingMore/loadingMore' />
+<view>
+    <block wx:for-items="{{itemsShow}}" wx:key="id">
+        <!-- <navigator url='../subPages/movie-detail/movie-detail?movieId={{item.id}}&showst={{item.showst}}'> -->
+        <view class="flex item" bindtap="toMovieDetail" data-movieId="{{item.id}}" data-showst="{{item.showst}}">
+            <view class="item_left">
+                <image src="{{item.img}}" />
+            </view>
+            <view class="flex_auto item_middle">
+                <view><text class="title">{{item.nm}}</text></view>
+                <view><text class="left_s">评分：</text><text class="score">{{item.sc}}</text></view>
+                <view><text class="sub_title">{{item.star}}</text></view>
+                <view><text class="actor">{{item.rt}} {{item.src}}上映</text></view>
+            </view>
+            <view class="item_right">
+                <view class='tag-box'>
+                    <text class='tag-d'>{{item.version[1]}}</text>
+                    <text class='tag-imax'>{{item.version[0]}}</text>
+                </view>
+            </view>
+        </view>
+        <!-- </navigator> -->
+    </block>
+</view>

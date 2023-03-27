@@ -1,0 +1,10 @@
+<view class='container'>
+  <view class='banner'>
+    
+  </view>
+  <view class='section'>
+    <view>
+    <text>电影商城小程序</text>
+  </view>
+  </view>
+</view>

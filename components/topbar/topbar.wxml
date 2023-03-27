@@ -1,0 +1,13 @@
+<!--components/topbar.wxml-->
+<view class="custom-head" style="height:{{navHeight}}px; background-color: {{color}};">
+    <view class="custom-content" style="height:{{navObj}}px;padding-top:{{navTop}}px;padding-right:{{navObjWid+5}}px;">
+        <navigator class='city-entry' url='../subPages/city-select/city-select'>
+            <text class='city-name'>{{city}}</text>
+            <text class='city-entry-arrow'></text>
+        </navigator>
+        <navigator class='search' url='../subPages/search-page/search-page?stype=-1'>
+            <text class='iconfont icon-sousuo' style="line-height: {{navObj}}px;"></text>
+            <input class='search-input' placeholder-class='phcolor' placeholder="{{placeholder}}"></input>
+        </navigator>
+    </view>
+</view>
