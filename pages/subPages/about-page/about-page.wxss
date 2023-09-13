@@ -1,36 +1,23 @@
 .container {
-  width: 100%;
-  height: 100vh;
-  background: #f7f7f7;
-  overflow: auto;
+    display: flex;
+    padding: 20rpx 20rpx;
+    flex-direction: column;
+    justify-content: start;
+    box-sizing: border-box;
 }
 
-.banner {
-  height: 375rpx;
-  margin: 20rpx;
-  box-sizing: border-box;
-  background-color: #eee;
-  line-height: 0;
-  border-radius: 10rpx;
-  overflow: hidden;
-  box-shadow: 2px 2px 2px 1px #ddd;
+.container .title {
+    font-size: large;
+    font-weight: 800;
+    margin: 30rpx 0;
 }
 
-.banner image {
-  width: 100%;
-  height: 100%;
-}
-
-.section {
-  background-color: #fff;
-  margin: 0 20rpx 20rpx;
-  border-radius: 10rpx;
-  padding: 20rpx;
-  box-shadow: 2px 2px 2px 1px #ddd;
-}
-
-.section text {
-  font-size: 28rpx;
-  line-height: 2em;
-  color: #666;
+.bottom {
+    text-align: center;
+    height: 60rpx;
+    border-top: 1rpx solid rgb(199, 191, 191);
+    margin: 30rpx 10rpx;
+    padding-top: 30rpx;
+    font-weight: 300;
+    font-size: 30rpx;
 }

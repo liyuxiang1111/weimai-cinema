@@ -42,6 +42,7 @@ Page( {
       method: 'GET',
       data: {},
       success: function (res) {
+        console.log(res);
         res.data.data.forEach(element => {
             that.data.colors.push(element.color)
         });

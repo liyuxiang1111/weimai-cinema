@@ -30,7 +30,7 @@
                 </navigator>
                 <navigator class='order-item' url='../subPages/snack-order/snack-order' hover-class='none'>
                     <image src='../../image/user/order_store.png'></image>
-                    <view>小吃</view>
+                    <view>商品</view>
                 </navigator>
             </view>
         </view>
@@ -47,9 +47,14 @@
             </view>
             <view class='about other-item'>
                 <navigator url='../subPages/about-page/about-page' hover-class='none'>
-                    <text class='iconfont icon-guanyuwomen'></text> 关于
+                    <text class='iconfont icon-guanyuwomen'></text> 用户条例
                 </navigator>
             </view>
+            <!-- <view class='customer other-item'>
+                <button open-type="chooseAvatar"  bindchooseavatar="chooseavatar" class='btn' hover-class='none'>
+                    <text class='iconfont icon-lianxikefu'></text> 获取头像
+                </button>
+            </view> -->
         </view>
     </view>
 </view>

@@ -24,7 +24,7 @@
         "pages/subPages/movie-wishmovie/wishmovie"
     ],
     "requiredPrivateInfos": [
-        "getFuzzyLocation"
+        "getLocation"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -62,6 +62,7 @@
         ]
     },
     "sitemapLocation": "sitemap.json",
+    "lazyCodeLoading": "requiredComponents",
     "permission": {
         "scope.userLocation": {
             "desc": "获取你的位置信息"

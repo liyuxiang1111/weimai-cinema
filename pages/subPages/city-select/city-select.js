@@ -4,7 +4,7 @@ const throttle = util.throttle
 const QQMapWX = require('../../../locale/qqmap-wx-jssdk.min');
 let qqmapsdk;
 qqmapsdk = new QQMapWX({
-  key: 'LC2BZ-25GCD-ZUP4O-H3U4A-53J5O-IWFF5'
+  key: 'ZNMBZ-D6URI-7CJGT-UO4SW-PAZB3-X6FQJ'
 });
 const citys = [{
     'id': '1',
