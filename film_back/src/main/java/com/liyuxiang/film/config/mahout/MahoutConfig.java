@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class MahoutConfig {
-//    private DruidDataSource getDataSource(){
+    //    private DruidDataSource getDataSource(){
 //        DruidDataSource dataSource=new DruidDataSource();
 //        dataSource.setConnectProperties();
 //        dataSource.setServerName("192.168.1.7");

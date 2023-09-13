@@ -28,9 +28,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
-public class MoviceService {
+public class MovieService {
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
@@ -45,6 +47,8 @@ public class MoviceService {
     private TimesMapper timesMapper;
     @Autowired
     private DataModel dataModel;
+    @Autowired
+    private FileService fileService;
 
 
     public PageBean<Movie> getList(Integer pageNum, Integer limit, String addr) {
@@ -53,15 +57,14 @@ public class MoviceService {
         if(moviePageBean!=null){
             return moviePageBean;
         }
+
         PageHelper.startPage(pageNum, limit);
-        List<Movie> movieList = movieMapper.getList(addr);
-        PageInfo pageInfo = new PageInfo(movieList);
-        PageBean<Movie> page = new PageBean<Movie>();
-        page.setPc(pageInfo.getPageNum());
-        page.setPs(pageInfo.getPageSize());
-        page.setTr(pageInfo.getPages());
-        page.setBeanList(movieList);
+        List<Movie> movieList = movieMapper.getList(addr); // 地址可以为空
+        PageInfo<Movie> pageInfo = new PageInfo<Movie>(movieList);
+
+        PageBean<Movie> page = new PageBean<>(pageInfo.getPageNum(), (int) pageInfo.getTotal(),pageInfo.getPageSize(),movieList);
         redisTemplate.opsForValue().set(key, page);
+        // 过期时间为1分钟
         redisTemplate.expire(key,1, TimeUnit.MINUTES);
         return page;
     }
@@ -126,7 +129,7 @@ public class MoviceService {
         if(movie.getShowst()==3)
             movie.setGlobalreleased(true);
         movieMapper.insert(movie);
-        movieRepository.index(movie);
+        movieRepository.index(movie); // 插入document
     }
 
     public List<Movie> getDaysByCinemaIdAndMovieId(Integer cinemaId,Integer movieId) {
@@ -176,10 +179,37 @@ public class MoviceService {
         else
             inMovie.setGlobalreleased(false);
         movieMapper.updateById(inMovie);
+        movieRepository.save(inMovie);
     }
 
     public void deleteById(Integer movieId) {
-        movieMapper.deleteById(movieId);
+        // 正则
+        String pattern = "(?<=8899/).*";
+        Pattern r = Pattern.compile(pattern);
+
+        Movie movie = movieMapper.selectById(movieId);
+        // 删除全部剧照
+        if (movie.getPhotos() != null || movie.getPhotos() != "") {
+            String[] split = movie.getPhotos().split(",");
+            for (String str : split) {
+                Matcher matcher = r.matcher(str);
+                if (matcher.find()) {
+                    String group = matcher.group();
+                    fileService.deleteFile(group);
+                }
+            }
+        }
+        // 删除海报
+        if (movie.getImg() != null || movie.getImg() != "") {
+            Matcher m = r.matcher(movie.getImg());
+            String new_file = "";
+            if (m.find()) {
+                new_file = m.group();
+            }
+            fileService.deleteFile(new_file); // 删除图片
+        }
+        movieMapper.deleteById(movieId); // 先删除服务器的图片
+        movieRepository.deleteById(movieId); // 再删除数据库和document
     }
 
     public List<Movie> getAllMovie() {

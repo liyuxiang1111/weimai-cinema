@@ -14,11 +14,13 @@ public interface SnackMapper extends BaseMapper<Snack> {
     List<Snack> selectAll();
 
     @Select("<script>" +
-            "select * from t_snack where 1=1 " +
+            "select * from t_snack s where 1=1 " +
             "<if test='cinemaId!=null'>" +
             "and cinema_id=#{cinemaId} " +
             "</if>" +
-            "and (first_title like '%${keyword}%' or second_title like '%${keyword}%') order by cur_number desc" +
+            "and ( (first_title like '%${keyword}%' or second_title like CONCAT('%',#{keyword},'%') ) " +
+            "or s.cinema_id in (select id from t_cinema where nm like CONCAT('%',#{keyword},'%') ) )" +
+            "order by cur_number desc " +
             "</script>")
     List<Snack> getSnack(String keyword, Integer cinemaId);
 

@@ -1,10 +1,15 @@
 package com.liyuxiang.film.config.util;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageBean<T> implements Serializable {
 
     private static final long serialVersionUID = 5868659764964018199L;
@@ -14,37 +19,5 @@ public class PageBean<T> implements Serializable {
     private int tr;// 总记录数total record
     private int ps;// 每页记录数page size
     private List<T> beanList;// 当前页的记录
-
-    public int getPc() {
-        return pc;
-    }
-
-    public int getTr() {
-        return tr;
-    }
-
-    public int getPs() {
-        return ps;
-    }
-
-    public List<T> getBeanList() {
-        return beanList;
-    }
-
-    public void setPc(int pc) {
-        this.pc = pc;
-    }
-
-    public void setTr(int tr) {
-        this.tr = tr;
-    }
-
-    public void setPs(int ps) {
-        this.ps = ps;
-    }
-
-    public void setBeanList(List<T> beanList) {
-        this.beanList = beanList;
-    }
 }
 

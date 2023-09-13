@@ -60,7 +60,7 @@ public class Admin_CinemaController {
             //添加
             Cinema cm = cinemaService.getCinemaByName(cinema1.getNm());
             if(cm!=null)
-                return new Result(Result.ERROR,"该电影已存在");
+                return new Result(Result.ERROR,"该影院已存在");
             cinema1 = QQMapUtil.addrToLocat(cinema1);
             cinemaService.insertCinema(cinema1);
         }

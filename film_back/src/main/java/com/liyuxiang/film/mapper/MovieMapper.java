@@ -15,7 +15,7 @@ public interface MovieMapper extends BaseMapper<Movie> {
             "select * from t_movie where showst=3 " +
             "and id in (select movie_id from t_days where cinema_id in " +
             "(select id from t_cinema where addr like '%${addr}%')) "+
-            "order by watched desc,sc desc" +
+            "order by watched desc,sc desc " +
             "</script>")
     List<Movie> getList(String addr);
 

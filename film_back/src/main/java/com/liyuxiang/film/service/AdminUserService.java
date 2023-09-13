@@ -27,11 +27,11 @@ public class AdminUserService {
 
     public PageBean<AdminUser> getAdmins(Integer pageNum, Integer limit, String keyword) {
         PageHelper.startPage(pageNum,limit);
-        List<AdminUser> adminUsers = adminUserMapper.getAdminsByKeword(keyword);
+        List<AdminUser> adminUsers = adminUserMapper.getAdminsByKeyword(keyword);
         PageInfo<AdminUser> pageInfo = new PageInfo<>(adminUsers);
         for(AdminUser adminUser : adminUsers){
-            if(adminUser.getCineamId()!=null)
-                adminUser.setCinemaNm(cinemaMapper.selectById(adminUser.getCineamId()).getNm());
+            if(adminUser.getCinemaId()!=null)
+                adminUser.setCinemaNm(cinemaMapper.selectById(adminUser.getCinemaId()).getNm());
             adminUser.setRoleId(adminRoleMapper.getByUserId(adminUser.getId()).getId());
         }
         PageBean<AdminUser> page = new PageBean<>();

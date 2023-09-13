@@ -12,35 +12,35 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Document(indexName = "movie",type = "movie",replicas = 0)
+@Document(indexName = "movie",replicas = 0)
 @TableName("t_movie")
 public class Movie extends Model<Movie> {
     private Integer id;
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String nm;
+    private String nm; // 电影名
 
     private String enm;
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String cat;
+    private String cat; // 电影类型
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String dir;
+    private String dir; // 电影导演
 
     private String img;
 
     private String version;
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String dra;
+    private String dra; // 剧情描述
 
     private Double sc;
 
     private Integer snum;
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String star;
+    private String star; // 明星
 
     private String src;
 
@@ -55,7 +55,7 @@ public class Movie extends Model<Movie> {
     private Integer watched;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private Date rt;
+    private Date rt;  // 上映日期
 
     private Integer showst;
 
@@ -68,10 +68,10 @@ public class Movie extends Model<Movie> {
     private String photos;
 
     @TableField(exist = false)
-    private String[] photosList;
+    private String[] photosList; // 外键
 
     @TableField(exist = false)
-    private List<Days> movieDays;
+    private List<Days> movieDays; // 外键
 
     public String[] getPhotosList() {
         return photosList;

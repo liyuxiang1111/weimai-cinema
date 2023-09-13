@@ -1,6 +1,7 @@
 package com.liyuxiang.film.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.liyuxiang.film.config.logs.LogAnnotation;
 import com.liyuxiang.film.entity.*;
 import com.liyuxiang.film.service.CinemaService;
 import com.liyuxiang.film.config.es.MovieRepository;
@@ -10,7 +11,7 @@ import com.liyuxiang.film.entity.Vo.SearchRes;
 import com.liyuxiang.film.entity.Vo.SelectCity;
 import com.liyuxiang.film.mapper.HallTypeMapper;
 import com.liyuxiang.film.service.BannerService;
-import com.liyuxiang.film.service.MoviceService;
+import com.liyuxiang.film.service.MovieService;
 import com.liyuxiang.film.config.util.PageBean;
 import com.liyuxiang.film.config.util.Result;
 import org.apache.shiro.SecurityUtils;
@@ -35,7 +36,7 @@ public class HomeController {
     private final static Logger logger = LoggerFactory.getLogger(UserController .class);
 
     @Autowired
-    private MoviceService moviceService;
+    private MovieService moviceService;
     @Autowired
     private BannerService bannerService;
     @Autowired
@@ -145,12 +146,13 @@ public class HomeController {
         return new Result(searchRes);
     }
 
+    // cityInfo 查询数据库
     private List<CinemaVo> searchCinema(String keyword,SelectCity cityInfo){
-        Page<Cinema> page =  cinemaService.findPage(keyword,
+        List<Cinema> cinemas =  cinemaService.findPage(keyword,
                 cityInfo.getLatitude().doubleValue(),
                 cityInfo.getLongitude().doubleValue(),
-                PageRequest.of(0, 50));
-        List<Cinema> cinemas = page.getContent();
+                PageRequest.of(0, 10));
+
         cinemas.forEach(emp->{
             double distance = GeoDistance.ARC.calculate(
                     cityInfo.getLatitude().doubleValue(),

@@ -4,22 +4,17 @@ import com.alibaba.druid.util.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
 public class MiniSessionManager extends DefaultWebSessionManager {
-    public final static  String token_name="token";
+    public final static  String token_name="token"; // 获取token
 
     public final static  String session_id_Source="request_header";
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-        // set-cookie
         // 拦截token的过滤方法
         String token = WebUtils.toHttp(request).getHeader(token_name); //这个修改就是从请求头里来获取
         if(StringUtils.isEmpty(token)){
@@ -33,7 +28,4 @@ public class MiniSessionManager extends DefaultWebSessionManager {
             return token;
         }
     }
-
-
-
 }

@@ -15,9 +15,9 @@ public interface CinemaMapper extends BaseMapper<Cinema> {
             "SELECT *,(round(6367000 * 2 * asin(sqrt(pow(sin(((latitude * pi()) / 180 - (#{lat} * pi()) / 180) / 2), 2) " +
             "+ cos((#{lat} * pi()) / 180) * cos((latitude * pi()) / 180) * pow(sin(((longitude * pi()) / 180 " +
             "- (#{lng} * pi()) / 180) / 2), 2))))) AS distance " +
-            "FROM `t_cinema` where addr like '%${adrr}%' " +
+            "FROM `t_cinema` where addr like CONCAT('%',#{adrr},'%') " +
             "<if test='selectRegion != null'>"+
-            "and addr like '%${selectRegion}%' " +
+            "and addr like CONCAT('%',#{selectRegion},'%') " +
             "</if>"+
             "<if test='brandId != -1'>"+
             "and brand_id=#{brandId} " +
@@ -47,6 +47,6 @@ public interface CinemaMapper extends BaseMapper<Cinema> {
     @Select("select * from t_cinema")
     List<Cinema> selectAll();
 
-    @Select("select * from t_cinema where nm like '%${keyword}%' or addr like '%${keyword}%'")
+    @Select("select * from t_cinema where nm like CONCAT('%',#{keyword},'%') or addr like CONCAT('%',#{keyword},'%')")
     List<Cinema> getCinema(String keyword);
 }

@@ -15,6 +15,7 @@ public interface TimesMapper extends BaseMapper<Times> {
     @Select("select * from t_times where days_id=#{dasId} and to_days(start_time)=to_days(#{day}) and start_time>now() order by start_time")
     List<Times> getByDaysId(Integer dasId, Date day);
 
+    // 相关id --> 影厅id --> 影院id --> 根据影院id查询电影院
     @Select("<script>" +
             "select * from t_cinema where id in " +
             "(select cinema_id from t_hall where id in (" +
@@ -28,7 +29,7 @@ public interface TimesMapper extends BaseMapper<Times> {
     @Select("<script>" +
             "select * from t_times where days_id in" +
             "(select id from t_days where movie_id in " +
-            "(select id from t_movie where nm like '%${keyword}%') " +
+            "(select id from t_movie where nm like CONCAT('%',#{keyword},'%')) " +
             "<if test='cinemaId!=null'>" +
             "and cinema_id=#{cinemaId} " +
             "</if>)" +

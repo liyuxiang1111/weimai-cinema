@@ -1,6 +1,6 @@
 package com.liyuxiang.film.config.exception;
 
-public class FileException extends RuntimeException{
+public class FileException extends RuntimeException {
     public FileException(String message) {
         super(message);
     }

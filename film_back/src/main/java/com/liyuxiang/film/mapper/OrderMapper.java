@@ -12,7 +12,7 @@ public interface OrderMapper extends BaseMapper<Order> {
     @Select("select * from t_order where item_type='电影票' and order_uid=#{userId} order by create_time desc")
     List<Order> getMovieOrderByUser(Integer userId);
 
-    @Select("select * from t_order where item_type='电影票' and relate_id=#{timesId} and `describe` like '%${startTime}%'")
+    @Select("select * from t_order where item_type='电影票' and relate_id=#{timesId} and `describe` like CONCAT('%',#{startTime},'%')")
     List<Order> getByTimesId(Integer timesId, String startTime);
 
     @Select("select * from t_order where item_type='小吃' and order_uid=#{userId} order by create_time desc")
@@ -21,7 +21,7 @@ public interface OrderMapper extends BaseMapper<Order> {
     @Select("<script>" +
             "select * from t_order where 1=1 " +
             "<if test='keyword != null '>" +
-            "and order_id like '%${keyword}%' " +
+            "and order_id like CONCAT('%',#{keyword},'%') " +
             "</if>" +
             "<if test='cinemaId!=null'>" +
             "and ((item_type='小吃' and relate_id=#{cinemaId})" +
@@ -32,4 +32,7 @@ public interface OrderMapper extends BaseMapper<Order> {
             "</if>" +
             "</script>")
     List<Order> getOrders(String keyword, Integer cinemaId);
+
+    @Select("select count(1) from t_order where order_uid=#{userId} and item_type = '电影票'")
+    Integer getOrderTotal(Integer userId);
 }

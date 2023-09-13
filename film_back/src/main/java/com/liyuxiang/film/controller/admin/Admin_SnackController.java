@@ -2,11 +2,14 @@ package com.liyuxiang.film.controller.admin;
 
 import com.liyuxiang.film.config.util.PageBean;
 import com.liyuxiang.film.config.util.Result;
+import com.liyuxiang.film.entity.AdminUser;
 import com.liyuxiang.film.entity.Snack;
 import com.liyuxiang.film.service.SnackService;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +28,11 @@ public class Admin_SnackController {
                             @RequestParam("limit") Integer limit,
                             @RequestParam(value = "keyword",required = false) String keyword,
                             @RequestParam(value = "cinemaId",required = false) Integer cinemaId){
-        PageBean<Snack> snackPageBean = snackService.getSnack(pageNum,limit,keyword,cinemaId);
+        Subject subject = SecurityUtils.getSubject();
+        AdminUser adminUser = (AdminUser) subject.getPrincipal();
+        System.out.println("===============");
+        System.out.println(adminUser.getCinemaId());
+        PageBean<Snack> snackPageBean = snackService.getSnack(pageNum,limit,keyword,adminUser.getCinemaId());
         return new Result(snackPageBean);
     }
 

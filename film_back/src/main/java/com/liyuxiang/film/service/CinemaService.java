@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.liyuxiang.film.config.exception.QQMapException;
 import com.liyuxiang.film.config.es.CinemaRepository;
+import com.liyuxiang.film.config.exception.QQMapException;
 import com.liyuxiang.film.entity.Cinema;
 import com.liyuxiang.film.entity.CinemaBrand;
 import com.liyuxiang.film.entity.Vo.CinemaFilter;
@@ -148,42 +148,21 @@ public class CinemaService {
         return cinemaMapper.selectOne(cinema);
     }
 
+    // 加入插入影院
     public void insertCinema(Cinema cinema) {
         cinemaMapper.insert(cinema);
         cinema.setLocation(new GeoPoint(cinema.getLatitude().doubleValue(),cinema.getLongitude().doubleValue()));
-        cinemaRepository.index(cinema);
+        cinemaRepository.save(cinema); // es 添加影院索引
     }
 
-    public Page<Cinema> findPage(String keyword,double latitude, double longitude, Pageable pageable) {
-        // 实现了SearchQuery接口，用于组装QueryBuilder和SortBuilder以及Pageable等
-        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
-        // 分页
-        nativeSearchQueryBuilder.withPageable(pageable);
-
-//        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
-//        WildcardQueryBuilder queryBuilder1 = QueryBuilders.wildcardQuery("nm", "*"+keyword+"*");
-//        WildcardQueryBuilder queryBuilder2 = QueryBuilders.wildcardQuery("addr", "*"+keyword+"*");
-//        boolQueryBuilder.should(queryBuilder1);
-//        boolQueryBuilder.should(queryBuilder2);
-        QueryStringQueryBuilder queryBuilder = new QueryStringQueryBuilder(keyword);
-        queryBuilder.analyzer("ik_smart");
-        queryBuilder.field("nm").field("addr");
-//        // 以某点为中心，搜索指定范围
-//        GeoDistanceQueryBuilder distanceQueryBuilder = new GeoDistanceQueryBuilder("location");
-//        distanceQueryBuilder.point(latitude, longitude);
-//        // 定义查询单位：公里
-//        distanceQueryBuilder.distance(distance, DistanceUnit.KILOMETERS);
-//        boolQueryBuilder.filter(distanceQueryBuilder);
-        nativeSearchQueryBuilder.withQuery(queryBuilder);
-
-        // 按距离升序
+    public List<Cinema> findPage(String keyword,double latitude, double longitude, Pageable pageable) {
+        // 按距离升序 ！！！！
         GeoDistanceSortBuilder distanceSortBuilder =
                 new GeoDistanceSortBuilder("location", latitude, longitude);
-        distanceSortBuilder.unit(DistanceUnit.KILOMETERS);
+        distanceSortBuilder.unit(DistanceUnit.KILOMETERS); // 公里
         distanceSortBuilder.order(SortOrder.ASC);
-        nativeSearchQueryBuilder.withSort(distanceSortBuilder);
-
-        return cinemaRepository.search(nativeSearchQueryBuilder.build());
+        List<Cinema> byNmLikeOrAddrLike = cinemaRepository.findByNmLikeOrAddrLike(keyword, keyword, pageable,distanceSortBuilder);
+        return byNmLikeOrAddrLike;
     }
 
 
@@ -217,10 +196,12 @@ public class CinemaService {
             cinema1 = QQMapUtil.addrToLocat(cinema1);
         }
         cinemaMapper.updateById(cinema1);
+        cinemaRepository.save(cinema1);
     }
-
+    // 删除影院
     public void deleteById(Integer cinemaId) {
         cinemaMapper.deleteById(cinemaId);
+        cinemaRepository.deleteById(cinemaId);
     }
 
     public List<Cinema> getAllCinema() {

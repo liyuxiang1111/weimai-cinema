@@ -24,6 +24,6 @@ public interface UserMapper extends BaseMapper<User> {
     @Insert("insert into t_user (avatar_url,nick_name,gender,open_id,last_login)value(#{avatarUrl},#{nickName},#{gender},#{openId},#{lastLogin})")
     void insertUser(User insert_user);
 
-    @Select("select * from t_user where nick_name like '%${keyword}%' or gender like '%${keyword}%'")
+    @Select("select * from t_user where nick_name like CONCAT('%',#{keyword},'%') or gender like CONCAT('%',#{keyword},'%') ")
     List<User> getUsers(String keyword);
 }

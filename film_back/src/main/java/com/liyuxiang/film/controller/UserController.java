@@ -4,22 +4,41 @@ import com.alibaba.fastjson.JSONObject;
 import com.liyuxiang.film.config.shiro.WxToken;
 import com.liyuxiang.film.config.util.HttpClientUtil;
 import com.liyuxiang.film.config.util.Constant;
+import com.liyuxiang.film.config.util.PageBean;
 import com.liyuxiang.film.config.util.Result;
+import com.liyuxiang.film.entity.Movie;
 import com.liyuxiang.film.entity.User;
+import com.liyuxiang.film.entity.Vo.OrderItem;
+import com.liyuxiang.film.service.CommentSerice;
+import com.liyuxiang.film.service.MovieWishService;
+import com.liyuxiang.film.service.OrderService;
+import com.liyuxiang.film.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.jcodings.util.Hash;
+import org.mortbay.util.ajax.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
+    @Autowired
+    private MovieWishService movieWishService;
+    @Autowired
+    private CommentSerice commentSerice;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private UserService userService;
     private final static Logger logger = LoggerFactory.getLogger(UserController .class);
 
     @PostMapping("/wxLogin")
@@ -65,6 +84,34 @@ public class UserController {
         if(!subject.isAuthenticated()){
             return new Result(Result.NOAUTHC,"未登录");
         }
+        User user = (User) subject.getPrincipal();
+        if (userService.isBaned(user.getId())) {
+            return new Result(Result.NOAUTHC,"未登录");
+        }
         return new Result();
+    }
+
+    @GetMapping("/wishMovie")
+    public Result wishMovie() {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated())
+            return new Result(Result.NOAUTHC, "未登录");
+        User user = (User)subject.getPrincipal();
+        PageBean<Movie> pageBean = movieWishService.getWishMovieByUserId(user.getId());
+        return new Result(pageBean);
+    }
+
+    @GetMapping("/getNotCommentMovie")
+    public Result getNotCommentMovie() {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated())
+            return new Result(Result.NOAUTHC, "未登录");
+        User user = (User)subject.getPrincipal();
+        Integer notCommentMovie = commentSerice.getNotCommentMovie(user.getId());
+        Integer orderTotal = orderService.getOrderTotal(user.getId());
+        Map<String, Integer> map = new HashMap<>();
+        map.put("notCommentMovie", notCommentMovie);
+        map.put("orderTotal", orderTotal);
+        return new Result(JSONObject.toJSON(map));
     }
 }

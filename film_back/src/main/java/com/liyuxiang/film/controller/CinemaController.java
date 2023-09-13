@@ -12,7 +12,7 @@ import com.liyuxiang.film.entity.Movie;
 import com.liyuxiang.film.entity.Seat;
 import com.liyuxiang.film.entity.Snack;
 import com.liyuxiang.film.entity.Vo.CinemaDetail;
-import com.liyuxiang.film.service.MoviceService;
+import com.liyuxiang.film.service.MovieService;
 import com.liyuxiang.film.service.SeatService;
 import com.liyuxiang.film.service.SnackService;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class CinemaController {
     @Autowired
     private CinemaService cinemaService;
     @Autowired
-    private MoviceService moviceService;
+    private MovieService moviceService;
     @Autowired
     private SeatService seatService;
     @Autowired

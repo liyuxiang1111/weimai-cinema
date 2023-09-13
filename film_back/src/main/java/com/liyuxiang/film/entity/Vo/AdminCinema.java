@@ -10,7 +10,7 @@ public class AdminCinema extends Cinema {
         this.setNm(cinema.getNm());
         this.setAddr(cinema.getAddr());
         this.setEndorse(cinema.getEndorse());
-        this.setAllowrefund(cinema.getAllowrefund());
+        this.setAllowrefund(cinema.getAllowRefund());
         this.setBrandId(cinema.getBrandId());
     }
 

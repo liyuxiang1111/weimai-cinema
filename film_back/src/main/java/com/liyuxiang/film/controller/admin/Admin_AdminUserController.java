@@ -9,6 +9,8 @@ import com.liyuxiang.film.entity.AdminUser;
 import com.liyuxiang.film.entity.Vo.AdminOptions;
 import com.liyuxiang.film.service.AdminRoleService;
 import com.liyuxiang.film.service.AdminUserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +19,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/auser")
+@RequiresPermissions("管理员用户管理")
 public class Admin_AdminUserController {
+
 
     @Autowired
     private AdminUserService adminUserService;
@@ -52,18 +56,23 @@ public class Admin_AdminUserController {
         String name = map.get("name");
         String username = map.get("username");
         String password = map.get("password");
+        // 盐值加密
+        String salt = "liyuxiang799";
+        Md5Hash md5Hash = new Md5Hash(password,salt,2);
+
         Integer roleId = Integer.parseInt(map.get("roleId"));
-        Integer cinemaId = Integer.parseInt(map.get("cineamId"));
+        Integer cinemaId = Integer.parseInt(map.get("cinemaId"));
         AdminUser user = new AdminUser();
         user.setId(userId);
         user.setName(name);
         user.setUsername(username);
-        user.setPassword(password);
-        user.setCineamId(cinemaId);
+        user.setPassword(md5Hash.toHex());
+        user.setCinemaId(cinemaId);
         if(userId!=null)
+            // 更新管理员
             adminUserService.updateInfo(user);
         else {
-            user.setAvatar("https://mokespace.cn/kodexplorer/index.php?share/fileProxy&user=1&sid=MEyKNFbx");
+            user.setAvatar("https://liyuxiang.com.cn/group1/M00/00/00/rBoZWmQYD-qAUfqdAAAcjWN469A474.jpg");
             adminUserService.insertInfo(user);
             adminRoleService.insertInfo(user.getId(),roleId);
         }

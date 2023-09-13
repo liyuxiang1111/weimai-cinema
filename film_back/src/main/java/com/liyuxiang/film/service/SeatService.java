@@ -6,6 +6,7 @@ import com.liyuxiang.film.entity.Times;
 import com.liyuxiang.film.mapper.OrderMapper;
 import com.liyuxiang.film.mapper.SeatMapper;
 import com.liyuxiang.film.mapper.TimesMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,75 +50,35 @@ public class SeatService {
 
     public void commitSeat(Integer hallId, List<Seat> newSeatList, List<Seat> changeSeatList) {
         //改变座位
-        List<Seat> seats = seatMapper.getSeatByHallId(hallId);
-        Seat[][] seatInfo = new Seat[15][15];
+        List<Seat> seats = getSeats(hallId);
+        Seat[][] seatInfo = new Seat[16][16];
+        // 16x16 表示的是 最外面一次没有使用
         for(Seat s : seats) {
             seatInfo[s.getyCoord()][s.getxCoord()] = s;
         }
         for(Seat s : changeSeatList){
             Seat tmp = seatInfo[s.getyCoord()][s.getxCoord()];
             if(tmp.getType().equals("danren")){
-                if(seatInfo[s.getyCoord()-1][s.getxCoord()]!=null
-                        ||seatInfo[s.getyCoord()][s.getxCoord()-1]!=null
-                        ||seatInfo[s.getyCoord()+1][s.getxCoord()]!=null
-                        ||seatInfo[s.getyCoord()][s.getxCoord()+1]!=null){
-                    tmp.setType("road");
-                    seatMapper.updateById(tmp);
-                }else{
-                    seatMapper.deleteById(tmp);
-                }
+                // 如果作为是单人 ---》 改变为过道
+                tmp.setType("road");
+                seatMapper.updateById(tmp);
             }else{
                 tmp.setType("danren");
                 seatMapper.updateById(tmp);
             }
         }
-        //新的座位
+        // 增添新的座位
         for(Seat s : newSeatList){
             int x = s.getxCoord()+1;
             int y = s.getyCoord()+1;
-            if(x-2>=0 && seatInfo[y][x-1]==null && seatInfo[y][x-2]!=null){
-                Seat seat = new Seat();
-                seat.setType("road");
-                seat.setHallId(hallId);
-                seat.setxCoord(x-1);
-                seat.setyCoord(y);
-                seat.setStatus("ok");
-                seatMapper.insert(seat);
-            }
-            if(x+2<15 && seatInfo[y][x+1]==null && seatInfo[y][x+2]!=null){
-                Seat seat = new Seat();
-                seat.setType("road");
-                seat.setHallId(hallId);
-                seat.setxCoord(x+1);
-                seat.setyCoord(y);
-                seat.setStatus("ok");
-                seatMapper.insert(seat);
-            }
-            if(y-2>=0 && seatInfo[y-1][x]==null&& seatInfo[y-2][x]!=null){
-                Seat seat = new Seat();
-                seat.setType("road");
-                seat.setHallId(hallId);
-                seat.setxCoord(x);
-                seat.setyCoord(y-1);
-                seat.setStatus("ok");
-                seatMapper.insert(seat);
-            }
-            if(y+2<15 && seatInfo[y+1][x]==null && seatInfo[y+2][x]!=null){
-                Seat seat = new Seat();
-                seat.setType("road");
-                seat.setHallId(hallId);
-                seat.setxCoord(x);
-                seat.setyCoord(y+1);
-                seat.setStatus("ok");
-                seatMapper.insert(seat);
-            }
-            s.setType("danren");
-            s.setHallId(hallId);
-            s.setStatus("ok");
-            s.setxCoord(x);
             s.setyCoord(y);
-            seatMapper.insert(s);
-            seatInfo[y][x] = s;
+            s.setxCoord(x);
+            s.setType("danren");
+            s.setStatus("ok");
+            s.setHallId(hallId);
+            if (seatInfo[y][x] == null) {
+                seatMapper.insert(s);
+            }
         }
     }
 }

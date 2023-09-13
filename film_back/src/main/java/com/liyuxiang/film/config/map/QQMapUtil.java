@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+// 通过将地址转变为 经纬度
 public class QQMapUtil {
 
     public static Cinema addrToLocat(Cinema cinema){

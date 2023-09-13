@@ -123,4 +123,8 @@ public class CommentSerice {
             commentMapper.upApproveById(commentId,-1);
         }
     }
+
+    public Integer getNotCommentMovie(Integer userId) {
+        return commentMapper.getNotCommentMovie(userId);
+    }
 }

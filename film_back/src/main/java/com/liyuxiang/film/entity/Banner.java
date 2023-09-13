@@ -13,6 +13,10 @@ public class Banner extends Model<Banner> {
 
     private String url;
 
+    private String color;
+
+    private Integer movieId;
+
     public Integer getId() {
         return id;
     }
@@ -35,6 +39,22 @@ public class Banner extends Model<Banner> {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     @Override

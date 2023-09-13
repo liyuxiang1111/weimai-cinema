@@ -84,16 +84,21 @@ public class OrderService {
         List<OrderItem> orderItems = new ArrayList<>();
         for(Order order : orderList){
             OrderItem orderItem = new OrderItem();
-            Movie movie = movieMapper.getMovieById(order.getItemId());
-            orderItem.setMovieName(movie.getNm());
+            Movie movie = movieMapper.getMovieById(order.getItemId()); // 获得电影
+            orderItem.setMovieName(movie.getNm()); // 获得名字
             orderItem.setMovieImg(movie.getImg());
             orderItem.setOrderId(order.getOrderId());
             orderItem.setStatus("支付完成");
             orderItem.setOrderPrice(order.getPrice().doubleValue());
+
             Cinema cinema = timesMapper.getCiemaId(order.getRelateId());
+            System.out.println("====================");
+            System.out.println(cinema.getNm());
+            System.out.println(cinema.getId());
             orderItem.setCinemaId(cinema.getId());
             orderItem.setCinemaName(cinema.getNm());
             orderItem.setSeats(order.getDescribe().substring(0,order.getDescribe().lastIndexOf(",")));
+
             Times times = timesMapper.selectById(order.getRelateId());
             orderItem.setHallId(times.getHallId());
             orderItem.setTime(times.getStartTime());
@@ -137,5 +142,10 @@ public class OrderService {
 
     public void deleteOrderById(Integer orderId) {
         orderMapper.deleteById(orderId);
+    }
+
+    // 获得订单总数
+    public Integer getOrderTotal(Integer userId) {
+        return orderMapper.getOrderTotal(userId);
     }
 }

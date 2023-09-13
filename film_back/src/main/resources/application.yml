@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password: Lyx123456@
-    url: jdbc:mysql://localhost:3306/weipiao?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf-8
+    password: Lyx123456
+    url: jdbc:mysql://47.98.109.202:3306/movie?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
@@ -20,22 +20,15 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 200MB
-      max-request-size: 215MB
+      max-file-size: 500MB
+      max-request-size: 500MB
       file-size-threshold: 2KB
-  # 配置es
-  data:
-    elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: 47.115.204.84:9200
 
-file:
-  upload-dir: ./upFile
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-    default-statement-timeout: 300
+# 200MB 215MB 2KB
+#file:
+#  upload-dir: ./upFile
 
+# mybatisplus
 mybatis-plus:
   global-config:
     db-column-underline: true
@@ -43,19 +36,44 @@ mybatis-plus:
     field-strategy: 2
   configuration:
     map-underscore-to-camel-case: true
-
+    default-statement-timeout: 300
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 日志
 logging:
   level:
-    com.moke.wp.wx_weimai.mapper: info
-    com.moke.wp.wx_weimai.service: info
+    com.liyuxiang.film.mapper: info
+    com.liyuxiang.film.service: info
   pattern:
     console: '%d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n'
 
-#分页pageHelper
+# 分页pageHelper
 pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
+
+#fastdfs 配置
+fdfs:
+  # 读取时间
+  so-timeout: 1500
+  # 连接超时时间
+  connect-timeout: 600
+  # 缩略图
+  thumb-image:
+    width: 150
+    height: 150
+  # Tracker服务，确保tracker storage nginx已经启动
+  tracker-list:
+    - 47.98.109.202:22122
+
+# aliyun OSS 配置
+aliyun:
+  oss:
+    file:
+      -endpoint: oss-cn-hangzhou.aliyuncs.com
+      -keyid: LTAI5tSnLoV9uT94NxYJu6vL
+      -keysecret: hWQhTPP4Tw6zVZpRig2t2e5Fbx8lHW
+      -bucketname: moviestore1
 
 server:
   #端口号

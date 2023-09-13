@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface SeatMapper extends BaseMapper<Seat> {
-    @Select("select * from t_seat where hall_id=#{hallId}")
+    @Select("select * from t_seat where hall_id=#{hallId} ORDER BY y_coord,x_coord")
     List<Seat> getSeatByHallId(Integer hallId);
 
 }

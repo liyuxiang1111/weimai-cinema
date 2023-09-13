@@ -16,10 +16,10 @@ public interface HallMapper extends BaseMapper<Hall> {
             "and cinema_id=#{cinemaId}" +
             "</if>" +
             "<if test='keyword!=null'>" +
-            "and ( cinema_id in " +
-            "(select id from t_cinema where nm like '%${keyword}%')" +
+            "and ( ( cinema_id in " +
+            "(select id from t_cinema where nm like CONCAT('%',#{keyword},'%') ) )" +
             "or hall_type_id in " +
-            "(select id from t_hall_type where hallType like '%${keyword}%'))" +
+            "(select id from t_hall_type where hallType like CONCAT('%',#{keyword},'%') ) )" +
             "</if>" +
             "</script>")
     List<Hall> getHalls(String keyword, Integer cinemaId);

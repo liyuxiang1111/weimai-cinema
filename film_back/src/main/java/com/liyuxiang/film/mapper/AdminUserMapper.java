@@ -15,7 +15,7 @@ public interface AdminUserMapper extends BaseMapper<AdminUser> {
 
     @Select("<script>" +
             "select * from t_admin_user where" +
-            " name like '%${keyword}%'" +
+            " name like CONCAT('%',#{keyword},'%') " +
             "</script>")
-    List<AdminUser> getAdminsByKeword(String keyword);
+    List<AdminUser> getAdminsByKeyword(String keyword);
 }

@@ -17,7 +17,7 @@ public class Days extends Model<Days> {
 
     private Integer movieId;
 
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date day;
 
     @TableField(exist = false)

@@ -49,4 +49,9 @@ public class UserService {
         user.setIsBanned(!user.getIsBanned());
         userMapper.updateById(user);
     }
+
+    public boolean isBaned(Integer userId) {
+        User user = userMapper.selectById(userId);
+        return user.getIsBanned();
+    }
 }

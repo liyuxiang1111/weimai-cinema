@@ -9,18 +9,18 @@ import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Document(indexName = "cinema",type = "cinema",replicas = 0)
+@Document(indexName = "cinema",replicas = 0)
 @TableName("t_cinema")
 public class Cinema extends Model<Cinema> {
     private Integer id;
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String nm;
+    private String nm; // 影院名
 
     private Integer brandId;
 
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_smart")
-    private String addr;
+    private String addr; // 影院导演
 
     private BigDecimal latitude;
 
@@ -109,7 +109,7 @@ public class Cinema extends Model<Cinema> {
         this.endorse = endorse;
     }
 
-    public Boolean getAllowrefund() {
+    public Boolean getAllowRefund() {
         return allowrefund;
     }
 

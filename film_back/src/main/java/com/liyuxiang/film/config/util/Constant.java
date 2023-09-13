@@ -1,12 +1,5 @@
 package com.liyuxiang.film.config.util;
 
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-
 public interface Constant {
 
     /*

@@ -9,7 +9,6 @@ public class MoviePhoto {
     public MoviePhoto(Movie movie) {
         this.movie = movie;
         String tmp = movie.getPhotos();
-
         this.photos = tmp.split(",");
     }
 

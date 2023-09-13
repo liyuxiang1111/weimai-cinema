@@ -29,7 +29,7 @@ public class HttpClientUtil {
         String resultString = "";
         CloseableHttpResponse response = null;
         try {
-            // 创建uri
+            // 创建uri ？xxx=xxx&xxx=xxx
             URIBuilder builder = new URIBuilder(url);
             if (param != null) {
                 for (String key : param.keySet()) {
@@ -50,6 +50,7 @@ public class HttpClientUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            // 关闭请求
             try {
                 if (response != null) {
                     response.close();
@@ -104,6 +105,7 @@ public class HttpClientUtil {
         return doPost(url, null);
     }
 
+    // 通过json传递参数
     public static String doPostJson(String url, String json) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();

@@ -2,21 +2,20 @@ package com.liyuxiang.film.controller.admin;
 
 import com.liyuxiang.film.config.util.PageBean;
 import com.liyuxiang.film.config.util.Result;
-import com.liyuxiang.film.entity.Hall;
-import com.liyuxiang.film.entity.Times;
+import com.liyuxiang.film.entity.*;
 import com.liyuxiang.film.entity.Vo.AdminOptions;
 import com.liyuxiang.film.entity.Vo.MovieSchedule;
 import com.liyuxiang.film.service.*;
-import com.liyuxiang.film.entity.Cinema;
-import com.liyuxiang.film.entity.Movie;
-import com.liyuxiang.film.service.*;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,7 @@ public class Admin_DaysAndTimesController {
     @Autowired
     private TimesService timesService;
     @Autowired
-    private MoviceService moviceService;
+    private MovieService moviceService;
     @Autowired
     private CinemaService cinemaService;
     @Autowired
@@ -42,7 +41,9 @@ public class Admin_DaysAndTimesController {
                                    @RequestParam("limit") Integer limit,
                                    @RequestParam("keyword") String keyword,
                                    @RequestParam(value = "cinemaId",required = false) Integer cinemaId){
-        PageBean<MovieSchedule> movieSchedulePageBean = daysService.getMovieSchedule(pageNum,limit,keyword,cinemaId);
+        Subject subject = SecurityUtils.getSubject();
+        AdminUser adminUser = (AdminUser) subject.getPrincipal();
+        PageBean<MovieSchedule> movieSchedulePageBean = daysService.getMovieSchedule(pageNum,limit,keyword,adminUser.getCinemaId());
         return new Result(movieSchedulePageBean);
     }
 
@@ -73,7 +74,14 @@ public class Admin_DaysAndTimesController {
     @GetMapping("/getOptions")
     public Result getOptions(){
         List<Movie> movieList = moviceService.getAllMovie();
-        List<Cinema> cinemaList = cinemaService.getAllCinema();
+        List<Cinema> cinemaList = new ArrayList<Cinema>();
+        Subject subject = SecurityUtils.getSubject();
+        AdminUser adminUser = (AdminUser) subject.getPrincipal();
+        if (adminUser.getCinemaId() != null) {
+            cinemaList.add(cinemaService.getCinemaById(adminUser.getCinemaId()));
+        } else {
+            cinemaList = cinemaService.getAllCinema();
+        }
         AdminOptions options = new AdminOptions();
         options.setCinemas(cinemaList);
         options.setMovies(movieList);

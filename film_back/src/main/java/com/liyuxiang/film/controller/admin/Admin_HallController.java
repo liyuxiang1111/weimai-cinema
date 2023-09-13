@@ -3,20 +3,20 @@ package com.liyuxiang.film.controller.admin;
 import com.alibaba.fastjson.JSONObject;
 import com.liyuxiang.film.config.util.PageBean;
 import com.liyuxiang.film.config.util.Result;
-import com.liyuxiang.film.entity.Hall;
-import com.liyuxiang.film.entity.HallType;
-import com.liyuxiang.film.entity.Seat;
+import com.liyuxiang.film.entity.*;
 import com.liyuxiang.film.entity.Vo.AdminHall;
 import com.liyuxiang.film.entity.Vo.AdminOptions;
 import com.liyuxiang.film.service.CinemaService;
 import com.liyuxiang.film.service.HallService;
-import com.liyuxiang.film.entity.Cinema;
 import com.liyuxiang.film.service.HallTypeService;
 import com.liyuxiang.film.service.SeatService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,7 +40,9 @@ public class Admin_HallController {
                            @RequestParam("limit") Integer limit,
                            @RequestParam(value = "keyword",required = false) String keyword,
                            @RequestParam(value = "cinemaId",required = false) Integer cinemaId){
-        PageBean<AdminHall> adminHallPageBean = hallService.getHalls(pageNum,limit,keyword,cinemaId);
+        Subject subject = SecurityUtils.getSubject();
+        AdminUser adminUser = (AdminUser) subject.getPrincipal();
+        PageBean<AdminHall> adminHallPageBean = hallService.getHalls(pageNum,limit,keyword,adminUser.getCinemaId());
         return new Result(adminHallPageBean);
     }
 
@@ -84,7 +86,14 @@ public class Admin_HallController {
     @GetMapping("/getOptions")
     public Result getCinema(){
         List<HallType> res1 = hallTypeService.getHallTypes();
-        List<Cinema> res2 = cinemaService.getAllCinema();
+        List<Cinema> res2 = new ArrayList<Cinema>();
+        Subject subject = SecurityUtils.getSubject();
+        AdminUser adminUser = (AdminUser) subject.getPrincipal();
+        if (adminUser.getCinemaId() != null) {
+            res2.add(cinemaService.getCinemaById(adminUser.getCinemaId()));
+        } else {
+            res2 = cinemaService.getAllCinema();
+        }
         AdminOptions adminOptions = new AdminOptions();
         adminOptions.setHallTypes(res1);
         adminOptions.setCinemas(res2);

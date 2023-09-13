@@ -16,9 +16,9 @@ public class AdminUser extends Model<AdminUser> {
 
     private String username;
 
-    private String password;
+    private String password; // 经过md5加盐加密后的密码展示
 
-    private Integer cineamId;
+    private Integer cinemaId;
 
     @TableField(exist = false)
     private String cinemaNm;
@@ -82,12 +82,12 @@ public class AdminUser extends Model<AdminUser> {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getCineamId() {
-        return cineamId;
+    public Integer getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCineamId(Integer cineamId) {
-        this.cineamId = cineamId;
+    public void setCinemaId(Integer cineamId) {
+        this.cinemaId = cineamId;
     }
 
     @Override

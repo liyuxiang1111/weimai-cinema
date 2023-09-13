@@ -39,9 +39,12 @@ public class DaysService {
             MovieSchedule schedule = new MovieSchedule(t);
             schedule.setHallNm(t.getHallId()+"号厅");
             Days days = daysMapper.selectById(t.getDaysId());
+            System.out.println("==============");
+            System.out.println(days.getDay().toString());
             schedule.setDays(days);
             schedule.setCinemaNm(cinemaMapper.selectById(days.getCinemaId()).getNm());
             schedule.setMovieNm(movieMapper.selectById(days.getMovieId()).getNm());
+            schedule.setMovieImg(movieMapper.selectById(days.getMovieId()).getImg());
             res.add(schedule);
         }
         PageInfo pageInfo = new PageInfo(times);

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 
 public class MovieSchedule extends Times {
     private String movieNm;
+    private String movieImg;
     private String cinemaNm;
     private String hallNm;
     private Days days;
@@ -44,6 +45,14 @@ public class MovieSchedule extends Times {
 
     public void setCinemaNm(String cinemaNm) {
         this.cinemaNm = cinemaNm;
+    }
+
+    public String getMovieImg() {
+        return movieImg;
+    }
+
+    public void setMovieImg(String movieImg) {
+        this.movieImg = movieImg;
     }
 
     public String getHallNm() {
