@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: root
-    password: Lyx123456
+    password: 123456
     url: jdbc:mysql://47.98.109.202:3306/movie?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -71,8 +71,8 @@ aliyun:
   oss:
     file:
       -endpoint: oss-cn-hangzhou.aliyuncs.com
-      -keyid: LTAI5tSnLoV9uT94NxYJu6vL
-      -keysecret: hWQhTPP4Tw6zVZpRig2t2e5Fbx8lHW
+      -keyid: XXXXXXXXXXXXXXXXXXXXXXXX
+      -keysecret: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
       -bucketname: moviestore1
 
 server:
