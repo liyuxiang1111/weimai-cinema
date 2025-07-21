@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.liyuxiang.film.mapper")
 @EnableScheduling
 public class FilmStoreApplication {
+    // 启动类
     public static void main(String[] args){
         System.setProperty("es.set.netty.runtime.available.processors","true");
         SpringApplication.run(FilmStoreApplication.class, args);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/film_back/film_back.iml" filepath="$PROJECT_DIR$/film_back/film_back.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/weimai-wetapp.iml" filepath="$PROJECT_DIR$/.idea/weimai-wetapp.iml" />
+    </modules>
+  </component>
+</project>

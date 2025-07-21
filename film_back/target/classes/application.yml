@@ -1,0 +1,81 @@
+spring:
+  datasource:
+    username: root
+    password: Lyx123456
+    url: jdbc:mysql://47.98.109.202:3306/movie?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 47.115.204.84
+    port: 6379
+    timeout: 60s
+    database: 1
+    lettuce:
+      pool:
+        max-idle: 30
+        max-active: 8
+        max-wait: 10000
+        min-idle: 10
+  # 开启 multipart 上传功能
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+      file-size-threshold: 2KB
+
+# 200MB 215MB 2KB
+#file:
+#  upload-dir: ./upFile
+
+# mybatisplus
+mybatis-plus:
+  global-config:
+    db-column-underline: true
+    id-type: 0
+    field-strategy: 2
+  configuration:
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 300
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 日志
+logging:
+  level:
+    com.liyuxiang.film.mapper: info
+    com.liyuxiang.film.service: info
+  pattern:
+    console: '%d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n'
+
+# 分页pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+
+#fastdfs 配置
+fdfs:
+  # 读取时间
+  so-timeout: 1500
+  # 连接超时时间
+  connect-timeout: 600
+  # 缩略图
+  thumb-image:
+    width: 150
+    height: 150
+  # Tracker服务，确保tracker storage nginx已经启动
+  tracker-list:
+    - 47.98.109.202:22122
+
+# aliyun OSS 配置
+aliyun:
+  oss:
+    file:
+      -endpoint: oss-cn-hangzhou.aliyuncs.com
+      -keyid: LTAI5tSnLoV9uT94NxYJu6vL
+      -keysecret: hWQhTPP4Tw6zVZpRig2t2e5Fbx8lHW
+      -bucketname: moviestore1
+
+server:
+  #端口号
+  port: 9999
+

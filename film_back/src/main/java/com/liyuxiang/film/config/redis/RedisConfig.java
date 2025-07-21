@@ -35,8 +35,6 @@ public class RedisConfig {
         return redisTemplate;
     }
 
-
-
     @Scheduled(cron = "0 0 0 * * ?")
     public void updateMysql(){
         daysMapper.updateDay();
